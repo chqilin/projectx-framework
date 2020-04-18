@@ -1,0 +1,15 @@
+{
+  "name": "projectx-framework",
+  "version": "1.0.7",
+  "displayName": "ProjectX",
+  "description": "Unity ProjectX Framework",
+  "scripts": {
+
+  },
+  "dependencies": {
+
+  },
+  "devDependencies": {
+
+  }
+}
