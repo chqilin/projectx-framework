@@ -19,7 +19,7 @@ namespace ProjectX
         public virtual void Ready()
         { }
 
-        public virtual void Loop(float elapse)
+        public virtual void Tick(float elapse)
         { }
 	}
 
@@ -82,7 +82,7 @@ namespace ProjectX
         {
             foreach (var node in mModules)
             {
-                node.Value.Loop(elapse);
+                node.Value.Tick(elapse);
             }
         }
     }

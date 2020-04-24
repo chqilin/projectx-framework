@@ -44,19 +44,13 @@ namespace ProjectX
         }
 
         protected virtual void Quit()
-        {
-
-        }
+        { }
 
         protected virtual void Ready()
-        { 
+        { }
 
-        }
-
-        protected virtual void Loop(float elapse) 
-        {
-
-        }
+        protected virtual void Tick(float elapse) 
+        { }
         #endregion
 
         #region Unity Life Circle
@@ -142,7 +136,7 @@ namespace ProjectX
         {
             float elapse = Time.deltaTime;
             
-            instance.Loop(elapse);
+            instance.Tick(elapse);
 
             mAssetManager.Update(elapse);
             mModuleManager.Update(elapse);

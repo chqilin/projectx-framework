@@ -44,7 +44,7 @@ namespace ProjectX
             this.mClient.ClearMessages();
         }
 
-        public override void Loop(float elapse)
+        public override void Tick(float elapse)
         {
             while (this.mRecvQueue.Count > 0)
             {

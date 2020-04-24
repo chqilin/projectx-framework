@@ -83,7 +83,7 @@ namespace ProjectX
         private List<Clock> mDeletes = new List<Clock>();
 
         #region Life Circle
-        public override void Loop(float elapse)
+        public override void Tick(float elapse)
         {
             // process new-clock in last frame
             foreach (Clock clock in this.mReadies)

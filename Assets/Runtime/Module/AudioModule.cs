@@ -50,7 +50,7 @@ namespace ProjectX
             this.mPlayback.ReleaseChannel(this.mMusicChannel);
         }
 
-        public override void Loop(float elapse)
+        public override void Tick(float elapse)
         {
             if (Camera.main != null && this.mListener != null)
             {
