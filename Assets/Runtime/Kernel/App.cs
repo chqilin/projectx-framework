@@ -23,7 +23,7 @@ namespace ProjectX
         {
             get { return instance.mFunctionManager; }
         }
-        public static SimpleFSM states
+        public static FSM states
         {
             get { return instance.mStateManager; }
         }
@@ -60,7 +60,7 @@ namespace ProjectX
         private AssetManager mAssetManager = new AssetManager();
         private ModuleManager mModuleManager = new ModuleManager();
         private FunctionManager mFunctionManager = new FunctionManager();
-        private SimpleFSM mStateManager = new SimpleFSM();
+        private FSM mStateManager = new FSM();
 
         void Awake()
         {

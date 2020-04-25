@@ -6,12 +6,12 @@ namespace ProjectX
     public class AudioChannel
     {
         public AudioSource source = null;
-        public SimpleFSM<AudioSource> states = null;
+        public FSM<AudioSource> states = null;
 
         public AudioChannel(AudioSource source)
         {
             this.source = source;
-            this.states = new SimpleFSM<AudioSource>();
+            this.states = new FSM<AudioSource>();
         }
 
         #region Life Circle
@@ -126,7 +126,7 @@ namespace ProjectX
         #endregion
 
         #region Audio State
-        public abstract class AudioState : SimpleFSM<AudioSource>.State
+        public abstract class AudioState : FSM<AudioSource>.State
         { }
 
         public class AudioState_ChangeVolume : AudioState
