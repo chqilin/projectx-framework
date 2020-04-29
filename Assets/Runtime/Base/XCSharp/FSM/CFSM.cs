@@ -78,6 +78,7 @@ namespace ProjectX
             public Status status = Status.None;
             public float time = 0;
             public string signal = "";
+            public XTable attributes = new XTable();
         }
 
         public class Context
