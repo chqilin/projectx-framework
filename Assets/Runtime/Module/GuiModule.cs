@@ -5,10 +5,22 @@ using System.Collections.Generic;
 
 namespace ProjectX
 {
+    public enum GUILayer
+    {
+        Background = 0,
+        Normal = 1,
+        Overlay = 2,
+    }
+    [System.Serializable]
+    public struct GUIEnitity
+    {
+        public GUILayer Layer;
+        public RectTransform RectTransform;
+    }
     public class GuiModule : AppModule
     {
         public Transform mainGroup = null;
-        public List<Transform> groups = new List<Transform>();
+        public List<GUIEnitity> groups = new List<GUIEnitity>();
 
         #region Properties and Indexers
         public GameObject this[string uiName]
@@ -38,12 +50,12 @@ namespace ProjectX
             return this.OpenUI(ui, attr);
         }
 
-        public GameObject OpenUI(Transform group, string uiName, XTable attr = null)
+        public GameObject OpenUI(GUILayer layer, string uiName, XTable attr = null)
         {
-            GameObject ui = this.FindUI(group, uiName);
-            if(ui == null)
+            GameObject ui = this.FindUI(groups[(int)layer].RectTransform, uiName);
+            if (ui == null)
             {
-                ui = this.CreateUI(group, uiName);
+                ui = this.CreateUI(groups[(int)layer].RectTransform, uiName);
             }
             return this.OpenUI(ui, attr);
         }
@@ -62,7 +74,7 @@ namespace ProjectX
                 }
                 controller.Open();
             }
-            
+
             return ui;
         }
 
@@ -91,7 +103,7 @@ namespace ProjectX
 
         public void CloseAll(Transform group = null)
         {
-            this.ForeachUI(group, ui => 
+            this.ForeachUI(group, ui =>
             {
                 this.CloseUI(ui);
                 return true;
@@ -238,7 +250,7 @@ namespace ProjectX
 
             for (int i = 0; i < this.groups.Count; i++)
             {
-                Transform g = this.groups[i];
+                Transform g = this.groups[i].RectTransform;
                 for (int p = 0; p < g.childCount; p++)
                 {
                     Transform t = g.GetChild(p);
@@ -246,7 +258,7 @@ namespace ProjectX
                         return;
                 }
             }
-        } 
+        }
         #endregion
     }
 }

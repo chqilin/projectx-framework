@@ -1,10 +1,11 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.EventSystems;
 
 namespace ProjectX
 {
-    public class GUIController : MonoBehaviour
+    public class GUIController : UIBehaviour
     {
         public System.Action onOpen = null;
         public System.Action onClose = null;
