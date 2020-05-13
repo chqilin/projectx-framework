@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace ProjectX
 {
     [RequireComponent(typeof(GUIManager))]
-    public class GuiModule : AppModule
+    public class GUIModule : AppModule
     {
         private GUIManager mManager = null;
 
