@@ -12,7 +12,15 @@ namespace ProjectX
 
         public bool destroyOnClose = true;
 
-        public XTable attribute = new XTable();
+        public RectTransform rectTransform
+        {
+            get
+            {
+                return this.transform as RectTransform;
+            }
+        }
+
+        public XTable attribute { get; set; } = new XTable();
 
         #region Virtual Methods
         public virtual bool IsOpen
