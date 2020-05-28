@@ -4,7 +4,7 @@ namespace ProjectX
 {
     public class Ability
     {
-        private List<object> mMuteces = new List<object>();//
+        private List<object> mMuteces = new List<object>();//123
         private List<object> mLocks = new List<object>();
 
         public bool canbelocked
