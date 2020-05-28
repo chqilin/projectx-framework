@@ -11,7 +11,7 @@ namespace ProjectX
         {
             public string funcName;
             public object context;
-            public object param;           
+            public object param;
             public object state;
             public Handler handler;
         }
@@ -49,13 +49,13 @@ namespace ProjectX
             {
                 AsyncInvoking invoking = this.mAsyncInvokings.Dequeue();
                 object result = this.Invoke(invoking.funcName, invoking.context, invoking.param);
-                if(invoking.handler != null)
+                if (invoking.handler != null)
                 {
                     invoking.handler(result, invoking.state);
                 }
                 break;
             }
-        } 
+        }
         #endregion
 
         #region Public Methods
@@ -67,6 +67,11 @@ namespace ProjectX
         public void Attach(string funcName, DelegateSet.Handler funcHandler)
         {
             this.mDelegates.Attach(funcName, funcHandler);
+        }
+
+        public void Detach(string funcName)
+        {
+            this.mDelegates.Detach(funcName);
         }
 
         public object Invoke(string funcName, object context, object param)
@@ -122,9 +127,9 @@ namespace ProjectX
             invoking.context = context;
             invoking.param = param;
             invoking.state = state;
-            invoking.handler = handler;           
+            invoking.handler = handler;
             this.mAsyncInvokings.Enqueue(invoking);
-        } 
+        }
         #endregion
     }
 }
