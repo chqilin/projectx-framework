@@ -83,6 +83,7 @@ namespace ProjectX
 
         public class Context
         {
+            public CFSM machine = null;
             public Status status = Status.None;
 
             public Dictionary<State, StateParam> stateParams = new Dictionary<State, StateParam>();
@@ -110,6 +111,7 @@ namespace ProjectX
         #region Virtual Life Circle
         public virtual void Init(Context context)
         {
+            context.machine = this;
             foreach (State state in this.mStates.Values)
             {
                 StateParam param = new StateParam();
