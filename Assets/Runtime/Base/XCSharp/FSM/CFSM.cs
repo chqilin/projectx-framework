@@ -54,7 +54,7 @@ namespace ProjectX
             #endregion
 
             #region Runtime Methods
-            public void ReadyAllNextStates(Context context, string signal)
+            public void InitAllNextStates(Context context, string signal)
             {
                 List<State> states = null;
                 this.next.TryGetValue(signal, out states);
@@ -144,7 +144,7 @@ namespace ProjectX
                     continue;
                 if (string.IsNullOrEmpty(param.signal))
                     continue;
-                state.ReadyAllNextStates(context, param.signal);
+                state.InitAllNextStates(context, param.signal);
                 param.signal = "";
             }
 
@@ -164,7 +164,7 @@ namespace ProjectX
                         state.Update(param, elapse);
                         break;
                     case Status.Completed:
-                        param.signal = "Stop";
+                        param.signal = "Complete";
                         state.Stop(param);
                         break;
                 }
