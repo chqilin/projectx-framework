@@ -258,7 +258,7 @@ namespace ProjectX
                 }
                 catch
                 {
-                    Debug.LogError("The asset-manifest is invalid at £º" + seg);
+                    Debug.LogError("The asset-manifest is invalid at ï¿½ï¿½" + seg);
                     return false;
                 }
             }
@@ -706,7 +706,7 @@ namespace ProjectX
             this.UnloadUnusedAssets();
         }
 
-        public void Update(float elapse)
+        public void Tick(float elapse)
         { }
         #endregion
 

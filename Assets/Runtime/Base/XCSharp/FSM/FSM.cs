@@ -46,7 +46,7 @@ namespace ProjectX
             this.Clear();
         }
 
-        public virtual void Update(float elapse)
+        public virtual void Tick(float elapse)
         {
             if (this.next != null)
             {
@@ -114,7 +114,7 @@ namespace ProjectX
                 this.time = 0;
             }
 
-            public virtual void Update(float elapse)
+            public virtual void Tick(float elapse)
             {
                 this.time += elapse;
             }
@@ -139,7 +139,7 @@ namespace ProjectX
             this.Clear();
         }
 
-        public virtual void Update(float elapse)
+        public virtual void Tick(float elapse)
         {
             if (this.next != null)
             {
@@ -161,7 +161,7 @@ namespace ProjectX
             {
                 if (this.current != null)
                 {
-                    this.current.Update(elapse);
+                    this.current.Tick(elapse);
                 }
             }
         }

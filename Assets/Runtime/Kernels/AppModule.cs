@@ -78,7 +78,7 @@ namespace ProjectX
             }
         }
 
-        public void Update(float elapse)
+        public void Tick(float elapse)
         {
             foreach (var node in mModules)
             {

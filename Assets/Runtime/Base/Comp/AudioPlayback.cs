@@ -23,9 +23,9 @@ namespace ProjectX
         {
             this.states.Quit();
         }
-        public void Update(float elapse)
+        public void Tick(float elapse)
         {
-            this.states.Update(elapse);
+            this.states.Tick(elapse);
         } 
         #endregion
 
@@ -142,9 +142,9 @@ namespace ProjectX
                 this.mTime = Mathf.Max(time, 0.001f);
             }
 
-            public override void Update(float elapse)
+            public override void Tick(float elapse)
             {
-                base.Update(elapse);
+                base.Tick(elapse);
 
                 float percent = this.time / this.mTime;
                 if (percent > 1.0f)
@@ -176,9 +176,9 @@ namespace ProjectX
                 this.mStage = 1; // fade out
             }
 
-            public override void Update(float elapse)
+            public override void Tick(float elapse)
             {
-                base.Update(elapse);
+                base.Tick(elapse);
 
                 if (this.mStage == 1) // fade out
                 {
@@ -228,9 +228,9 @@ namespace ProjectX
                 this.PlayNext();
             }
 
-            public override void Update(float elapse)
+            public override void Tick(float elapse)
             {
-                base.Update(elapse);
+                base.Tick(elapse);
 
                 if (this.subject.isPlaying)
                     return;
@@ -285,9 +285,9 @@ namespace ProjectX
                 this.PlayRandom();
             }
 
-            public override void Update(float elapse)
+            public override void Tick(float elapse)
             {
-                base.Update(elapse);
+                base.Tick(elapse);
                 
                 if (this.subject.isPlaying)
                     return;
@@ -455,7 +455,7 @@ namespace ProjectX
             for (int i = 0; i < this.mChannels.Count; i++)
             {
                 AudioChannel channel = this.mChannels[i];
-                channel.Update(elapse);
+                channel.Tick(elapse);
             }
         }
         #endregion

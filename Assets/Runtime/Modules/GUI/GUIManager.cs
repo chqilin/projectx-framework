@@ -51,14 +51,14 @@ namespace ProjectX
             if (ui == null)
                 return null;
 
-            GUIController controller = ui.GetComponent<GUIController>();
-            if (controller != null)
+            GUIBehavior behavior = ui.GetComponent<GUIBehavior>();
+            if (behavior != null)
             {
                 if (attr != null)
                 {
-                    controller.attribute = attr;
+                    behavior.attribute = attr;
                 }
-                controller.Open();
+                behavior.Open();
             }
 
             return ui;
@@ -80,10 +80,10 @@ namespace ProjectX
         {
             if (ui == null)
                 return;
-            GUIController controller = ui.GetComponent<GUIController>();
-            if (controller != null && controller.IsOpen)
+            var behavior = ui.GetComponent<GUIBehavior>();
+            if (behavior != null && behavior.IsOpen)
             {
-                controller.Close();
+                behavior.Close();
             }
         }
 
@@ -106,8 +106,8 @@ namespace ProjectX
         {
             if (ui == null)
                 return false;
-            GUIController controller = ui.GetComponent<GUIController>();
-            return controller != null && controller.IsOpen;
+            var behavior = ui.GetComponent<GUIBehavior>();
+            return behavior != null && behavior.IsOpen;
         }
 
         public void NotifyAll(string method, params object[] param)
@@ -144,10 +144,10 @@ namespace ProjectX
         {
             if (ui == null)
                 return;
-            GUIController controller = ui.GetComponent<GUIController>();
-            if (controller == null)
+            var behavior = ui.GetComponent<GUIBehavior>();
+            if (behavior == null)
                 return;
-            XReflector.InvokeInstance(controller, method, true, param);
+            XReflector.InvokeInstance(behavior, method, true, param);
         }
 
         public GameObject CreateUI(string uiName)

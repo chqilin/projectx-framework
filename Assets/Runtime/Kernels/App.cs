@@ -138,10 +138,10 @@ namespace ProjectX
             
             instance.Tick(elapse);
 
-            mAssetManager.Update(elapse);
-            mModuleManager.Update(elapse);
-            mFunctionManager.Update(elapse);
-            mStateManager.Update(elapse);
+            mAssetManager.Tick(elapse);
+            mModuleManager.Tick(elapse);
+            mFunctionManager.Tick(elapse);
+            mStateManager.Tick(elapse);
         }
         #endregion 
     }

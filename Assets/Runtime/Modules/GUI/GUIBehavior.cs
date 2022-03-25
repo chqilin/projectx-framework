@@ -5,21 +5,15 @@ using UnityEngine.EventSystems;
 
 namespace ProjectX
 {
-    public class GUIController : UIBehaviour
+    public class GUIBehavior : UIBehaviour
     {
         public System.Action onOpen = null;
         public System.Action onClose = null;
 
         public bool destroyOnClose = true;
 
-        public RectTransform rectTransform
-        {
-            get
-            {
-                return this.transform as RectTransform;
-            }
-        }
-
+        public RectTransform rectTransform => this.transform as RectTransform;
+            
         public XTable attribute { get; set; } = new XTable();
 
         #region Virtual Methods
@@ -54,11 +48,11 @@ namespace ProjectX
         {
             if (destUi == null)
                 return;
-            GUIController destController = destUi.GetComponent<GUIController>();
-            if (destController == null)
+            GUIBehavior destBehavior = destUi.GetComponent<GUIBehavior>();
+            if (destBehavior == null)
                 return;
             this.Close();
-            destController.Open();
+            destBehavior.Open();
         }
         #endregion
     }

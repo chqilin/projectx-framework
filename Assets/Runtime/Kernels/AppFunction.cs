@@ -43,7 +43,7 @@ namespace ProjectX
             this.mDelegates.Clear();
         }
 
-        public void Update(float elapse)
+        public void Tick(float elapse)
         {
             while (this.mAsyncInvokings.Count > 0)
             {
