@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace ProjectX
 {
@@ -9,8 +10,8 @@ namespace ProjectX
         public delegate GameObject LoadPrefabFunc(string uiName);
         public LoadPrefabFunc OnLoadPrefab = null;
 
-        public GUIGroup mainGroup = null;
-        public List<GUIGroup> groups = new List<GUIGroup>();
+        public Canvas canvasMain = null;
+        public List<Canvas> canvasList = new List<Canvas>();
 
         #region Properties and Indexers
         public GameObject this[string uiName]
@@ -30,17 +31,16 @@ namespace ProjectX
             return this.OpenUI(ui, attr);
         }
 
-        public GameObject OpenUI(GUILayer layer, string uiName, XTable attr = null)
+        public GameObject OpenUI(int canvasIndex, string uiName, XTable attr = null)
         {
-            int layerIndex = (int)layer;
-            if (layerIndex < 0 || layerIndex >= this.groups.Count)
+            if (canvasIndex < 0 || canvasIndex >= this.canvasList.Count)
                 return null;
 
-            GUIGroup group = this.groups[layerIndex];
-            GameObject ui = this.FindUI(group, uiName);
+            Canvas canvas = this.canvasList[canvasIndex];
+            GameObject ui = this.FindUI(canvas, uiName);
             if (ui == null)
             {
-                ui = this.CreateUI(group, uiName);
+                ui = this.CreateUI(canvas, uiName);
             }
 
             return this.OpenUI(ui, attr);
@@ -70,9 +70,9 @@ namespace ProjectX
             this.CloseUI(ui);
         }
 
-        public void CloseUI(GUIGroup group, string uiName)
+        public void CloseUI(Canvas canvas, string uiName)
         {
-            GameObject ui = this.FindUI(group, uiName);
+            GameObject ui = this.FindUI(canvas, uiName);
             this.CloseUI(ui);
         }
 
@@ -87,9 +87,9 @@ namespace ProjectX
             }
         }
 
-        public void CloseAll(GUIGroup group = null)
+        public void CloseAll(Canvas canvas = null)
         {
-            this.ForeachUI(group, ui =>
+            this.ForeachUI(canvas, ui =>
             {
                 this.CloseUI(ui);
                 return true;
@@ -119,9 +119,9 @@ namespace ProjectX
             });
         }
 
-        public void NotifyAll(GUIGroup group, string method, params object[] param)
+        public void NotifyAll(Canvas canvas, string method, params object[] param)
         {
-            this.ForeachUI(group, ui =>
+            this.ForeachUI(canvas, ui =>
             {
                 this.Notify(ui, method, param);
                 return true;
@@ -134,9 +134,9 @@ namespace ProjectX
             this.Notify(ui, method, param);
         }
 
-        public void Notify(GUIGroup group, string uiName, string method, params object[] param)
+        public void Notify(Canvas canvas, string uiName, string method, params object[] param)
         {
-            GameObject ui = this.FindUI(group, uiName);
+            GameObject ui = this.FindUI(canvas, uiName);
             this.Notify(ui, method, param);
         }
 
@@ -152,14 +152,14 @@ namespace ProjectX
 
         public GameObject CreateUI(string uiName)
         {
-            if (this.groups.Count == 0)
+            if (this.canvasMain == null)
                 return null;
-            return this.CreateUI(this.mainGroup, uiName);
+            return this.CreateUI(this.canvasMain, uiName);
         }
 
-        public GameObject CreateUI(GUIGroup group, string uiName)
+        public GameObject CreateUI(Canvas canvas, string uiName)
         {
-            if (group == null)
+            if (canvas == null)
                 return null;
             if (this.OnLoadPrefab == null)
                 return null;
@@ -167,17 +167,17 @@ namespace ProjectX
             if (prefab == null)
                 return null;
 
-            GameObject ui = this.CreateUI(group, prefab);
+            GameObject ui = this.CreateUI(canvas, prefab);
             return ui;
         }
 
-        public GameObject CreateUI(GUIGroup group, GameObject prefab)
+        public GameObject CreateUI(Canvas canvas, GameObject prefab)
         {
             GameObject ui = Object.Instantiate(prefab) as GameObject;
             if (ui == null)
                 return null;
             ui.name = prefab.name;
-            ui.transform.SetParent(group.transform, false);
+            ui.transform.SetParent(canvas.transform, false);
             return ui;
         }
 
@@ -197,11 +197,11 @@ namespace ProjectX
             return result;
         }
 
-        public GameObject FindUI(GUIGroup group, string uiName)
+        public GameObject FindUI(Canvas canvas, string uiName)
         {
             string uiNameClone = XUtility.AddCloneMarkForName(uiName);
             GameObject result = null;
-            this.ForeachUI(group, ui =>
+            this.ForeachUI(canvas, ui =>
             {
                 if (ui.name == uiName || ui.name == uiNameClone)
                 {
@@ -214,25 +214,25 @@ namespace ProjectX
         }
 
         public delegate bool ForeachHandler(GameObject ui);
-        public void ForeachUI(GUIGroup group, ForeachHandler handler)
+        public void ForeachUI(Canvas canvas, ForeachHandler handler)
         {
             if (handler == null)
                 return;
 
-            if (group != null)
+            if (canvas != null)
             {
-                for (int p = 0; p < group.transform.childCount; p++)
+                for (int p = 0; p < canvas.transform.childCount; p++)
                 {
-                    Transform t = group.transform.GetChild(p);
+                    Transform t = canvas.transform.GetChild(p);
                     if (!handler(t.gameObject))
                         return;
                 }
                 return;
             }
 
-            for (int i = 0; i < this.groups.Count; i++)
+            for (int i = 0; i < this.canvasList.Count; i++)
             {
-                Transform g = this.groups[i].transform;
+                Transform g = this.canvasList[i].transform;
                 for (int p = 0; p < g.childCount; p++)
                 {
                     Transform t = g.GetChild(p);

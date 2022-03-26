@@ -5,9 +5,9 @@ using UnityEngine;
 
 namespace ProjectX
 {
-    public class ClientModule : AppModule
+    public class Client : MonoBehaviour
     {
-        public System.Action<ClientModule> onRegisterMessages = null;
+        public System.Action<Client> onRegisterMessages = null;
 
         private NetworkClient mClient = new NetworkClient();
         private Queue<DatagramMessage> mSendQueue = new Queue<DatagramMessage>();
@@ -16,7 +16,7 @@ namespace ProjectX
         private Dictionary<System.Type, System.Action<DatagramMessage>> mHandlers = new Dictionary<System.Type, System.Action<DatagramMessage>>();
 
         #region Life Circle
-        public override bool Init()
+        void Awake()
         {
             // register messages
             XCSharp.InvokeAction(this.onRegisterMessages, this);
@@ -34,26 +34,21 @@ namespace ProjectX
             this.mClient.OnRecvFailure += this.OnRecvFailure;
             this.mClient.OnRecvRawdata += this.OnRecvRawdata;
             this.mClient.OnRecvMessage += this.OnRecvMessage;
-
-            return true;
         }
 
-        public override void Quit()
+        void OnDestroy()
         {
             this.mClient.Disconnect();
             this.mClient.ClearMessages();
         }
 
-        public override void Tick(float elapse)
+        void Update()
         {
             while (this.mRecvQueue.Count > 0)
             {
                 DatagramMessage message = this.mRecvQueue.Dequeue();
                 System.Type type = message.GetType();
-
-                // global handlers
-                App.funcs.Invoke(type.Name, this, message);
-
+                
                 // scoped handlers
                 System.Action<DatagramMessage> handler = null;
                 this.mHandlers.TryGetValue(type, out handler);

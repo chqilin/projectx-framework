@@ -287,7 +287,8 @@ namespace ProjectX
         {
             if (string.IsNullOrEmpty(this.mAssetHostURL) || bundleNames.Count == 0)
                 return;
-            App.instance.StartCoroutine(this.DownloadAllAsync(this.mAssetHostURL, bundleNames));
+            // TODO:
+            //this.StartCoroutine(this.DownloadAllAsync(this.mAssetHostURL, bundleNames));
         }
 
         private IEnumerator DownloadAllAsync(string assetHostURL, List<string> bundleNames)
@@ -651,7 +652,7 @@ namespace ProjectX
         }
     }
 
-    public class AssetManager
+    public class AssetManager : MonoBehaviour
     {
         private BundleDownloader mBundleDownloader = new BundleDownloader();
 
@@ -870,12 +871,12 @@ namespace ProjectX
                 return;
             }
 
-            App.instance.StartCoroutine(this.CreateAssetAsync<T>(bundleName, location, handler));
+            this.StartCoroutine(this.CreateAssetAsync<T>(bundleName, location, handler));
         }
 
         public void LoadSceneAsync(string sceneName, System.Action<string> handler)
         {
-            App.instance.StartCoroutine(this.CreateSceneAsync(sceneName, handler));
+            this.StartCoroutine(this.CreateSceneAsync(sceneName, handler));
         }
 
         public AssetBundle LoadBundle(string bundleName)
@@ -959,7 +960,7 @@ namespace ProjectX
                 else
                 {
                     loading = mBundleLoader.NewBundleAsyncLoading(bundleName);
-                    yield return App.instance.StartCoroutine(loading.LoadAsync(bundleName));
+                    yield return this.StartCoroutine(loading.LoadAsync(bundleName));
                     if (!string.IsNullOrEmpty(loading.error))
                     {
                         mAssetWaitings.Notify(location, null as T);
@@ -1017,7 +1018,7 @@ namespace ProjectX
                 if (bundle == null)
                 {
                     BundleLoading loading = new BundleLoading();
-                    yield return App.instance.StartCoroutine(loading.LoadAsync(bundleName));
+                    yield return this.StartCoroutine(loading.LoadAsync(bundleName));
                     if (!string.IsNullOrEmpty(loading.error))
                     {
                         Debug.LogError(loading.error);
